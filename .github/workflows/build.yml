@@ -1,15 +1,7 @@
 name: Build DevBuild
 on:
     push:
-        branches:
-            - main
-        paths:
-            - .github/workflows/build.yml
-            - src/**
-            - browser/**
-            - scripts/build/**
-            - package.json
-            - pnpm-lock.yaml
+    workflow_dispatch: 
 env:
     FORCE_COLOR: true
     plugins_changed: false
@@ -55,7 +47,6 @@ jobs:
                   echo "release_tag=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
             - name: Upload DevBuild as release
-              if: github.repository == 'Vendicated/Vencord'
               run: |
                   gh release upload devbuild --clobber dist/*
                   gh release edit devbuild --title "DevBuild $RELEASE_TAG"
